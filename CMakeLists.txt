@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Change your executable name to something creative!
-set(NAME pico-boilerplate) # <-- Name your project/executable here!
+set(NAME pico-snake) # <-- Name your project/executable here!
 
 include(pico_sdk_import.cmake)
 
@@ -20,13 +20,19 @@ add_executable(${NAME}
 
 # Include required libraries
 # This assumes `pimoroni-pico` is stored alongside your project
-include(../pimoroni-pico/libraries/pico_explorer/pico_explorer.cmake)
-# include(../pimoroni-pico/libraries/pico_display/pico_display.cmake)
+#include(../pimoroni-pico/libraries/pico_explorer/pico_explorer.cmake)
+include(../pimoroni-pico/libraries/pico_display/pico_display.cmake)
 
 # Don't forget to link the libraries you need!
 target_link_libraries(${NAME}
-    pico_explorer # <-- List libraries here!
+    pico_stdlib
+    pico_display # <-- List libraries here!
+    pico_multicore
 )
+
+# enable usb output, disable uart output
+pico_enable_stdio_usb(pico-snake 1)
+pico_enable_stdio_uart(pico-snake 0)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(${NAME})
